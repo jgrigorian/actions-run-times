@@ -32,13 +32,6 @@ type Run struct {
 	} `json:"workflow_runs"`
 }
 
-// Colors
-
-var Red = color.New(color.FgRed).PrintfFunc()
-var Yellow = color.New(color.FgYellow).PrintfFunc()
-var Green = color.New(color.FgGreen).PrintfFunc()
-var Blue = color.New(color.FgCyan).PrintfFunc()
-
 func main() {
 
 	// Flags
@@ -109,7 +102,6 @@ func getGHToken() string {
 	if _, ok := os.LookupEnv("GH_TOKEN"); ok {
 		return os.Getenv("GH_TOKEN")
 	} else {
-		//Yellow("WARNING: Could not find GH_TOKEN environment variable.\n")
 		color.Yellow("WARNING: Could not find GH_TOKEN environment variable.\n")
 		token, _ := ask.HiddenAsk("Please enter your Github token...\n")
 		return token
