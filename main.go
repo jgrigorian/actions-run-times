@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/miquella/ask"
+	"github.com/rodaine/table"
 	"io"
 	"net/http"
 	"os"
@@ -32,6 +33,7 @@ type Run struct {
 }
 
 // Colors
+
 var Red = color.New(color.FgRed).PrintfFunc()
 var Yellow = color.New(color.FgYellow).PrintfFunc()
 var Green = color.New(color.FgGreen).PrintfFunc()
@@ -78,14 +80,6 @@ func main() {
 
 	var durationsSlice []time.Duration
 	for _, item := range result.WorkflowRuns {
-		//fmt.Println(" ")
-		//fmt.Printf("ID: %v\n", item.ID)
-		//fmt.Printf("Name: %v\n", item.Name)
-		//
-		//fmt.Printf("Started: %v\n", item.RunStartedAt.Second())
-		//fmt.Printf("Ended: %v\n", item.UpdatedAt.Second())
-		//fmt.Printf("Duration: %v\n", item.UpdatedAt.Sub(item.CreatedAt))
-
 		durationsSlice = append(durationsSlice, item.UpdatedAt.Sub(item.CreatedAt))
 	}
 
@@ -97,18 +91,15 @@ func main() {
 	runCount := int(result.TotalCount)
 	avgTime := totalTime / time.Duration(runCount)
 
-	Blue("Repository\t\t\tBranch\t\t\t\tSuccessful Runs\t\tAverage Build Time\n")
-	//fmt.Println(strings.Repeat("-", 125))
-	fmt.Printf("%v/%v\t\t\t%v\t\t%v\t\t\t%v\n", *orgPtr, *repoPtr, *branchPtr, result.TotalCount, avgTime)
+	// Table
+	headerFmt := color.New(color.FgCyan, color.Underline).SprintfFunc()
+	columnFmt := color.New(color.FgYellow).SprintfFunc()
 
-	//Blue("Branch: ")
-	//fmt.Printf("%v\n", *branchPtr)
+	tbl := table.New("Repository", "Branch", "Successful Runs", "Average Build Time")
+	tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
+	tbl.AddRow(fmt.Sprintf("%v/%v", *orgPtr, *repoPtr), *branchPtr, result.TotalCount, avgTime)
 
-	//Blue("Successful Runs: ")
-	//fmt.Printf("%v\n", result.TotalCount)
-
-	//Blue("Average Build Time: ")
-	//fmt.Printf("%v\n", avgTime)
+	tbl.Print()
 }
 
 func getGHToken() string {
@@ -118,7 +109,8 @@ func getGHToken() string {
 	if _, ok := os.LookupEnv("GH_TOKEN"); ok {
 		return os.Getenv("GH_TOKEN")
 	} else {
-		Yellow("WARNING: Could not find GH_TOKEN environment variable.\n")
+		//Yellow("WARNING: Could not find GH_TOKEN environment variable.\n")
+		color.Yellow("WARNING: Could not find GH_TOKEN environment variable.\n")
 		token, _ := ask.HiddenAsk("Please enter your Github token...\n")
 		return token
 	}
