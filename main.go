@@ -103,10 +103,10 @@ func main() {
 
 	//Blue("Branch: ")
 	//fmt.Printf("%v\n", *branchPtr)
-	//
+
 	//Blue("Successful Runs: ")
 	//fmt.Printf("%v\n", result.TotalCount)
-	//
+
 	//Blue("Average Build Time: ")
 	//fmt.Printf("%v\n", avgTime)
 }
@@ -115,14 +115,9 @@ func getGHToken() string {
 	//	Check if GH_TOKEN env var exists, if not, prompt for token
 	//	Hint: You can store your token in your bash or zsh profile:
 	//	export GH_TOKEN="<enter token here>"
-	//fmt.Println("Checking for GH_TOKEN environment variable...")
-	//Yellow("Checking for GH_TOKEN environment variable...\n")
 	if _, ok := os.LookupEnv("GH_TOKEN"); ok {
-		//fmt.Println("Found GH_TOKEN environment variable!")
-		//Green("SUCCESS: Found GH_TOKEN environment variable!\n")
 		return os.Getenv("GH_TOKEN")
 	} else {
-		//fmt.Println("WARNING: Could not find GH_TOKEN environment variable.")
 		Yellow("WARNING: Could not find GH_TOKEN environment variable.\n")
 		token, _ := ask.HiddenAsk("Please enter your Github token...\n")
 		return token
