@@ -107,13 +107,13 @@ func Workflows(c *cli.Context) {
 	for i, r := range result.Workflows {
 
 		wfRuns, totalRunCount, avgTime := workflowRuns(owner, repo, result.Workflows[i].ID)
-		t.Row(fmt.Sprintf("%v/%v", owner, repo), wfRuns.WorkflowRuns[i].Name, strconv.FormatInt(r.ID, 10), totalRunCount, avgTime)
+		t.Row(fmt.Sprintf("%v/%v", owner, repo), wfRuns.WorkflowRuns[i].Name, strconv.FormatInt(r.ID, 10), totalRunCount, avgTime.String())
 	}
 
 	fmt.Println(t.Render())
 }
 
-func workflowRuns(owner string, repo string, workflowId int64) (*Run, string, string) {
+func workflowRuns(owner string, repo string, workflowId int64) (*Run, string, time.Duration) {
 
 	url := fmt.Sprintf("https://api.github.com/repos/%v/%v/actions/workflows/%v/runs", owner, repo, workflowId)
 
@@ -166,5 +166,5 @@ func workflowRuns(owner string, repo string, workflowId int64) (*Run, string, st
 		avgTime = totalTime / time.Duration(runCount)
 	}
 
-	return &result, strconv.Itoa(result.TotalCount), avgTime.String()
+	return &result, strconv.Itoa(result.TotalCount), time.Duration(avgTime).Round(time.Second)
 }
