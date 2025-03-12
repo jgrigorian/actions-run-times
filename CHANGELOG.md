@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/jgrigorian/actions-run-times/compare/v1.0.0...v1.1.0) (2025-03-12)
+
+
+### Features
+
+* remove makefile and github token requirement ([c4bb750](https://github.com/jgrigorian/actions-run-times/commit/c4bb750b37cdb6527e18df101870f74c681a60cd))
+
 ## 1.0.0 (2025-03-12)
 
 
