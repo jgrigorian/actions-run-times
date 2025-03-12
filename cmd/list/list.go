@@ -11,8 +11,7 @@ import (
 
 	//"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/table"
-	//"github.com/fatih/color"
-	"github.com/jgrigorian/actions-run-times/cmd/common"
+
 	"io"
 	"net/http"
 	//"strconv"
@@ -57,7 +56,6 @@ func Workflows(c *cli.Context) {
 
 	url := fmt.Sprintf("https://api.github.com/repos/%v/%v/actions/workflows", owner, repo)
 
-	token := common.GetGHToken()
 	client := &http.Client{
 		Timeout: time.Second * 10,
 	}
@@ -67,7 +65,6 @@ func Workflows(c *cli.Context) {
 	}
 	req.Header.Set("Accept", "application/vnd.github+json")
 	req.Header.Set("X-GitHub-Api-Version", "2022-11-28")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %v", token))
 
 	response, err := client.Do(req)
 	if err != nil {
@@ -102,7 +99,7 @@ func Workflows(c *cli.Context) {
 		color.HiMagentaString("Workflow"),
 		color.HiMagentaString("ID"),
 		color.HiMagentaString("Successful Runs"),
-		color.HiMagentaString("Average Build Times"))
+		color.HiMagentaString("Average Run Times"))
 
 	for i, r := range result.Workflows {
 
@@ -117,7 +114,6 @@ func workflowRuns(owner string, repo string, workflowId int64) (*Run, string, ti
 
 	url := fmt.Sprintf("https://api.github.com/repos/%v/%v/actions/workflows/%v/runs", owner, repo, workflowId)
 
-	token := common.GetGHToken()
 	client := &http.Client{
 		Timeout: time.Second * 10,
 	}
@@ -127,7 +123,6 @@ func workflowRuns(owner string, repo string, workflowId int64) (*Run, string, ti
 	}
 	req.Header.Set("Accept", "application/vnd.github+json")
 	req.Header.Set("X-GitHub-Api-Version", "2022-11-28")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %v", token))
 
 	response, err := client.Do(req)
 	if err != nil {

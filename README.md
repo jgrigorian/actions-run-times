@@ -1,7 +1,4 @@
-# Actions Build Time
-
-Requirements:
-- environment variable which has your Github Token (GH_TOKEN)
+# Actions Run Times
 
 This tool will return the following:
 - all GitHub workflows in a given repository
@@ -10,11 +7,11 @@ This tool will return the following:
 
 Example:
 ```bash
-$ actions-run-times list workflows --owner "derailed" --repo "k9s"
+$ actions-run-times list workflows --owner "jgrigorian" --repo "certscan"
 
-   Repository       Workflow                             ID            Successful Runs     Average Build Times   
-                                                                                                                 
-   derailed/k9s     K9s Lint                             76629439      227                 29m1s                 
-   derailed/k9s     K9s Test                             6893216       543                 12m6s                 
-   derailed/k9s     docker in /. - Update \#978135623    133662603     79                  27s                 
+   Repository              Workflow                         ID            Successful Runs     Average Run Times
+
+   jgrigorian/certscan     Build Release Binaries           145003030     1                   5m27s
+   jgrigorian/certscan     Enforce Conventional Commits     145003031     2                   15s
+   jgrigorian/certscan     release-please                   145002944     5                   2m22s              
 ```
