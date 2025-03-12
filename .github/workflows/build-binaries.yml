@@ -24,9 +24,9 @@ jobs:
       - name: Display the version of go that we have installed
         run: go version
 
-      - uses: extractions/setup-just@v1
+      - uses: extractions/setup-just@v2
         with:
-          just-version: 1.28.0
+          just-version: 1.40.0
 
       - name: Build binaries
         run: |
