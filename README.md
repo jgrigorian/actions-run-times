@@ -9,8 +9,7 @@ This tool will return the following:
 
 Example:
 ```bash
-❯ actions-build-time --org "society6" --repo "s6-web" --workflowId "38035010" --branch "pipeline-actions"
+$ actions-build-time --org "jgrigorian" --repo "certscan" --workflowId "38035010" --branch "master"
 Repository                      Branch                          Successful Runs         Average Build Time
-society6/s6-web                 pipeline-actions                4                       9m19s
-
+jgrigorian/certscan             master                          4                       9m19s
 ```
